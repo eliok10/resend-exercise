@@ -3,6 +3,7 @@ Getting Started
 **1. Clone the repo**
 
 git clone https://github.com/YOUR-USERNAME/resend-exercise.git
+
 cd resend-exercise
 
 **2. Install dependencies**
