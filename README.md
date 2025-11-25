@@ -1,21 +1,19 @@
 Getting Started
 
-1. Clone the repo
+**1. Clone the repo**
 
 git clone https://github.com/YOUR-USERNAME/resend-exercise.git
 cd resend-exercise
 
-2. Install dependencies
+**2. Install dependencies**
 
 npm install
 
-3. Add your API key
+**3. Add your API key**
 
-Create a .env.local file:
+Create a .env.local file: RESEND_API_KEY=your_api_key_here
 
-RESEND_API_KEY=your_api_key_here
-
-4. Start the dev server
+**4. Start the dev server**
 
     npm run dev
     Visit: http://localhost:3000
@@ -24,20 +22,20 @@ RESEND_API_KEY=your_api_key_here
 5. Click the button to send a test billing failure email.
 
 
-How the Email Is Sent
+**How the Email Is Sent**
 
 The API route lives at: app/api/send-billing-failure/route.ts
 
 
 It does the following:
 
-    Reads the request body (email, customerName, last4)
+1. Reads the request body (email, customerName, last4)
 
-    Loads public/files/Take Home Challenge.pdf and encodes it as base64
+2. Loads public/files/Take Home Challenge.pdf and encodes it as base64
 
-    Generates the email HTML using the React Email template
+3. Generates the email HTML using the React Email template
 
-S   ends everything through the Resend SDK
+4. Sends everything through the Resend SDK
 
 Example call:
 
@@ -54,25 +52,19 @@ await resend.emails.send({
   ]
 });
 
-Email Template
+**Email Template**
 
-The template is written using React Email components:
-
-src/emails/BillingFailureEmail.tsx
-
+The template is written using React Email components: src/emails/BillingFailureEmail.tsx
 
 It includes the customer name, the last four digits of the card, a message, and a button linking to a billing page.
 
-Attachment
+**Attachment**
 
 An example PDF is stored at: public/files/Take Home Challenge.pdf
 
+It is read directly in the API route and sent as a base64-encoded attachment. You can replace this with any PDF if needed.
 
-It is read directly in the API route and sent as a base64-encoded attachment.
-
-You can replace this with any PDF if needed.
-
-Testing the Email
+**Testing the Email**
 
 Go to page.tsx and change the email to your own domain
 For real sends, make sure your domain is verified in the Resend dashboard
