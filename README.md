@@ -19,7 +19,7 @@ Create a .env.local file: RESEND_API_KEY=your_api_key_here
     Visit: http://localhost:3000
 
 
-5. Click the button to send a test billing failure email.
+Click the button to send a test billing failure email.
 
 
 **How the Email Is Sent**
