@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Getting Started
 
-## Getting Started
+1. Clone the repo
 
-First, run the development server:
+git clone https://github.com/YOUR-USERNAME/resend-exercise.git
+cd resend-exercise
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Install dependencies
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Add your API key
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a .env.local file:
 
-## Learn More
+RESEND_API_KEY=your_api_key_here
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the dev server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    npm run dev
+    Visit: http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+5. Click the button to send a test billing failure email.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+How the Email Is Sent
+
+The API route lives at: app/api/send-billing-failure/route.ts
+
+
+It does the following:
+
+    Reads the request body (email, customerName, last4)
+
+    Loads public/files/Take Home Challenge.pdf and encodes it as base64
+
+    Generates the email HTML using the React Email template
+
+S   ends everything through the Resend SDK
+
+Example call:
+
+await resend.emails.send({
+  from: "Acme Billing <onbording@resend.dev>",
+  to: [email],
+  subject: "Payment failed – please update your billing details",
+  react: BillingFailureEmail({ customerName, last4 }),
+  attachments: [
+    {
+      filename: "Take Home Challenge.pdf",
+      content: base64File
+    }
+  ]
+});
+
+Email Template
+
+The template is written using React Email components:
+
+src/emails/BillingFailureEmail.tsx
+
+
+It includes the customer name, the last four digits of the card, a message, and a button linking to a billing page.
+
+Attachment
+
+An example PDF is stored at: public/files/Take Home Challenge.pdf
+
+
+It is read directly in the API route and sent as a base64-encoded attachment.
+
+You can replace this with any PDF if needed.
+
+Testing the Email
+
+Go to page.tsx and change the email to your own domain
+For real sends, make sure your domain is verified in the Resend dashboard
+Logs are available in the Resend UI
