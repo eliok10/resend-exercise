@@ -2,7 +2,7 @@ Getting Started
 
 **1. Clone the repo**
 
-git clone https://github.com/YOUR-USERNAME/resend-exercise.git
+git clone https://github.com/theelioproject/resend-exercise.git
 
 cd resend-exercise
 
